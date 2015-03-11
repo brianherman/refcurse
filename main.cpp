@@ -14,27 +14,27 @@ void match(char c){
     else
         throw -1;
 }
-void S(){
-    if (nextchar() == 'a'){
-        match('a');
-        S();
-        match('b');
+void parenthesis(){
+    if (nextchar() == '('){
+        match('(');
+        parenthesis();
+        match(')');
     }
     else
         ;
 
 }
 int main(){
+    cout << "> ";
     getline(cin, input);
     input = input + "$";
     index = 0;
-
     try{
-        S();
+        parenthesis();
         match('$');
-        cout << " Yes";
+        cout << " Yes" << endl;
     }catch(int n){
-        cout << "No";
+        cout << "No" << endl;
     }
     return 0;
 }
