@@ -38,43 +38,9 @@ void match(char c){
     Sim --> a | b | c | "є"
 
  */
-void C();
-void C2();
+void RE();
 void RE2();
-void B();
-void parenthesis();
-void sym();
-
-void RE(){
-   cout << input;
-   C();
-   RE2();
-}
-void RE2(){
-    cout << input;
-    match('|');
-    RE();
-    C();     
-}
-void C(){
-   cout << input;
-   C2();
-   RE2();
-   //sym(;
-}
-void C2(){
-   cout << input;
-    match('*');
-    RE();
-    C();     
-}
-void sym(){
-   cout << input;
-   match('a');
-   match('b');
-   match('c');
-   match('d');
-}
+void K();
 /**
  * parenthesis -> (parenthesis)
  */
@@ -87,6 +53,51 @@ void parenthesis(){
     else
         ;
 
+}
+void K(){
+    if(nextchar()=='*'){
+        match('*');
+    }
+    parenthesis();
+ }
+void C2(){
+  K();   
+}
+void C(){
+    if(nextchar()=='a'){
+        match('a');
+        C();
+    }
+    if(nextchar()=='b'){
+        match('b');
+        C();
+    }
+    if(nextchar()=='c'){
+        match('c');
+        C();
+    }
+    if(nextchar()=='d'){
+        match('d');
+        C();
+    }
+    else
+        C2();
+    //B();
+}
+
+void RE2(){
+    C();
+    RE();
+}
+void RE(){
+    cout << input;
+    C();
+    if(nextchar()=='|'){
+        match('|');
+        C();
+        RE2();
+    }else{
+    }
 }
 
 int main(){
