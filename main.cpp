@@ -45,10 +45,12 @@ void K();
  * parenthesis -> (parenthesis)
  */
 void parenthesis(){
+    RE();
     if (nextchar() == '('){
         match('(');
         RE();
         match(')');
+        RE();
     }
     else
         ;
@@ -60,9 +62,6 @@ void K(){
     }
     parenthesis();
  }
-void C2(){
-  K();   
-}
 void C(){
     if(nextchar()=='a'){
         match('a');
@@ -81,8 +80,7 @@ void C(){
         C();
     }
     else
-        C2();
-    //B();
+        K();
 }
 
 void RE2(){
@@ -90,7 +88,6 @@ void RE2(){
     RE();
 }
 void RE(){
-    cout << input;
     C();
     if(nextchar()=='|'){
         match('|');
