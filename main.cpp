@@ -27,14 +27,61 @@ void match(char c){
     else
         throw -1;
 }
+/*
+    RE --> C
+    RE --> RE "|" C
+    C --> B
+    C -->C "." B
+    B --> Sim
+    B -->B "*"
+    B -->"(" RE ")"
+    Sim --> a | b | c | "є"
 
+ */
+void C();
+void C2();
+void RE2();
+void B();
+void parenthesis();
+void sym();
+
+void RE(){
+   cout << input;
+   C();
+   RE2();
+}
+void RE2(){
+    cout << input;
+    match('|');
+    RE();
+    C();     
+}
+void C(){
+   cout << input;
+   C2();
+   RE2();
+   //sym(;
+}
+void C2(){
+   cout << input;
+    match('*');
+    RE();
+    C();     
+}
+void sym(){
+   cout << input;
+   match('a');
+   match('b');
+   match('c');
+   match('d');
+}
 /**
  * parenthesis -> (parenthesis)
  */
 void parenthesis(){
     if (nextchar() == '('){
         match('(');
-        parenthesis();
+        RE();
         match(')');
     }
     else
@@ -48,7 +95,7 @@ int main(){
     input = input + "$";
     index = 0;
     try{
-        parenthesis();
+        RE();
         match('$');
         cout << " Yes" << endl;
     }catch(int n){
