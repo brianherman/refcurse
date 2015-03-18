@@ -45,7 +45,6 @@ void K();
  * parenthesis -> (parenthesis)
  */
 void parenthesis(){
-    RE();
     if (nextchar() == '('){
         match('(');
         RE();
@@ -88,6 +87,7 @@ void RE2(){
     RE();
 }
 void RE(){
+    cout << input;
     C();
     if(nextchar()=='|'){
         match('|');
