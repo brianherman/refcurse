@@ -27,24 +27,35 @@ void match(char c){
     else
         throw -1;
 }
-/*
-    RE --> C
-    RE --> RE "|" C
-    C --> B
-    C -->C "." B
-    B --> Sim
-    B -->B "*"
-    B -->"(" RE ")"
-    Sim --> a | b | c | "є"
+/* Left Recursion In place
+    RE -> C
+    RE -> RE "|" C
+    B -> 'A'
+        |'B'
+        |'C'
+        |'D'
+    B ->B "*"
+    B ->"(" RE ")"
+    Left Recursion Removed
+    P-> "(" RE ")" RE
+        | E
+    K -> '*' P
+    C -> 'A'C
+        |'B'C
+        |'C'C
+        |'D'C
+        | K
+    RE  -> C'*'C RE2
+    RE2 -> C
+        | RE2
 
  */
+void C();
 void RE();
 void RE2();
 void K();
-/**
- * parenthesis -> (parenthesis)
- */
-void parenthesis(){
+void K2();
+void P(){
     if (nextchar() == '('){
         match('(');
         RE();
@@ -55,26 +66,30 @@ void parenthesis(){
         ;
 
 }
+
 void K(){
-    if(nextchar()=='*'){
-        match('*');
+    if(nextchar()=='|'){
+        match('|');
+        C();
+        K2();
     }
-    parenthesis();
+    P();
  }
+void K2(){
+    C();
+    K();
+}
 void C(){
     if(nextchar()=='a'){
         match('a');
         C();
-    }
-    if(nextchar()=='b'){
+    }else if(nextchar()=='b'){
         match('b');
         C();
-    }
-    if(nextchar()=='c'){
+    }else if(nextchar()=='c'){
         match('c');
         C();
-    }
-    if(nextchar()=='d'){
+    }else if(nextchar()=='d'){
         match('d');
         C();
     }
@@ -83,32 +98,33 @@ void C(){
 }
 
 void RE2(){
-    C();
+    //C();
     RE();
 }
+
 void RE(){
-    cout << input;
-    C();
-    if(nextchar()=='|'){
-        match('|');
+    if(nextchar()=='*'){
         C();
+        match('*');
         RE2();
     }else{
+
     }
 }
 
 int main(){
-    cout << "> ";
-    getline(cin, input);
-    input = input + "$";
-    index = 0;
-    try{
-        RE();
-        match('$');
-        cout << " Yes" << endl;
-    }catch(int n){
-        cout << "No" << endl;
+    while (true){
+        cout << "> ";
+        getline(cin, input);
+        input = input + "$";
+        index = 0;
+        try{
+            RE();
+            match('$');
+            cout << " Yes" << endl;
+        }catch(int n){
+            cout << "No" << endl;
+        }
     }
     return 0;
 }
-
